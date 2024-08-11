@@ -1,0 +1,70 @@
+<!-- templates/partials/navbar.html -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">LIGUILLA</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <!-- Enlace a la página de inicio -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Inicio</a>
+                </li>
+  
+                <!-- Enlace a las noticias del campeonato -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'news' %}">Noticias</a>
+                </li>
+  
+                <!-- Enlace a la tabla de posiciones -->
+                <li class="nav-item">
+                    <a class="nav-link" href="% url 'standings' %">Tabla de Posiciones</a>
+                </li>
+  
+                <!-- Enlace a los próximos partidos -->
+                <li class="nav-item">
+                    <a class="nav-link" href="% url 'fixtures' %">Próximos Partidos</a>
+                </li>
+  
+                <!-- Mostrar opciones dependiendo del estado de autenticación -->
+                {% if user.is_authenticated %}
+                  <!-- Enlace al perfil del usuario -->
+                  <li class="nav-item">
+                      <a class="nav-link" href="% url 'profile' %">Perfil</a>
+                  </li>
+  
+                  <!-- Enlace a la página de administración si el usuario es admin -->
+                  {% if user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin_dashboard' %}">Panel de Administración</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'news_list' %}">Noticias crud</a>
+                    </li>
+                  {% endif %}
+  
+                  <!-- Formulario para cerrar sesión -->
+                  <li class="nav-item">
+                    <form action="{% url 'logout' %}" method="post" class="form-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger">Cerrar Sesión</button>
+                    </form>
+                  </li>
+                {% else %}
+                  <!-- Enlace a la página de inicio de sesión -->
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
+                  </li>
+  
+                  <!-- Enlace a la página de registro (si existe) -->
+                  <li class="nav-item">
+                      <a class="nav-link" href="% url 'signup' %">Registrarse</a>
+                  </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+  </nav>
+  

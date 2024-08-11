@@ -1,0 +1,29 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Noticias{% endblock %}
+
+{% block content %}
+  <main>
+    <h1>Noticias</h1>
+    <div class="row">
+      {% for item in news %}
+      <div class="col-sm-6 mb-3 mb-sm-0">
+        <div class="card mb-3" style="max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{ item.title }}</h5>
+                <p class="card-text">{{ item.content }}</p>
+                <p class="card-text"><small class="text-body-secondary">Publicado el {{ item.created_at }}</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+        <li>No hay noticias disponibles.</li>
+      {% endfor %}
+    </div>
+    
+  </main>
+{% endblock %}

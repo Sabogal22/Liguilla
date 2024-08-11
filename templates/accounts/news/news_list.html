@@ -1,0 +1,20 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Lista de Noticias{% endblock %}
+
+{% block content %}
+<h1>Noticias</h1>
+<a href="{% url 'news_create' %}">Crear Nueva Noticia</a>
+<ul>
+    {% for item in news %}
+        <li>
+            <h2>{{ item.title }}</h2>
+            <p>{{ item.content }}</p>
+            <a href="{% url 'news_update' item.pk %}">Editar</a> |
+            <a href="{% url 'news_delete' item.pk %}">Eliminar</a>
+        </li>
+    {% empty %}
+        <li>No hay noticias disponibles.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
