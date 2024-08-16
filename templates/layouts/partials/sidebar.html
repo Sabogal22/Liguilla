@@ -10,11 +10,27 @@
         <img src="{% static 'AdminLTE/dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="#" class="d-block">Neythan Sabogal</a>
+        {% if user.is_authenticated %}
+          <a href="#" class="d-block">{{ user.username }}</a>
+          <!-- Icono para cerrar sesión -->
+          <form action="{% url 'logout' %}" method="post" class="form-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-link p-0" title="Cerrar Sesión">
+                <i class="fas fa-sign-out-alt text-danger"></i>
+            </button>
+        </form>        
+        {% else %}
+          <!-- Icono para iniciar sesión -->
+          <a href="{% url 'login' %}" class="d-block">
+            <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+          </a>
+        {% endif %}
       </div>
-    </div>
+    </div>    
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Dashboard -->
+        {% if user.is_authenticated %}
         <li class="nav-item menu-open">
           <a href="#" class="nav-link active">
             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -25,7 +41,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{% url 'home' %}" class="nav-link active">
+              <a href="{% url 'admin_dashboard' %}" class="nav-link active">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Admin Dashboard</p>
               </a>
@@ -38,13 +54,30 @@
             </li>
           </ul>
         </li>
+        {% endif %}
+        <!-- Secciones del Campeonato -->
         <li class="nav-item">
-          <a href="pages/widgets.html" class="nav-link">
-            <i class="nav-icon fas fa-th"></i>
-            <p>
-              Widgets
-              <span class="right badge badge-danger">New</span>
-            </p>
+          <a href="% url 'partidos_list' %" class="nav-link">
+            <i class="nav-icon fas fa-futbol"></i>
+            <p>Partidos</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="% url 'tabla_posiciones' %" class="nav-link">
+            <i class="nav-icon fas fa-list-ol"></i>
+            <p>Tabla de Posiciones</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="% url 'goleadores_list' %" class="nav-link">
+            <i class="nav-icon fas fa-chart-bar"></i>
+            <p>Goleadores</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="% url 'todo_campeonato' %" class="nav-link">
+            <i class="nav-icon fas fa-info-circle"></i>
+            <p>Todo sobre el Campeonato</p>
           </a>
         </li>
       </ul>

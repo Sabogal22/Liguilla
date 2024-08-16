@@ -10,7 +10,6 @@ def home(request):
     return render(request, 'home.html')
 
 @login_required
-@user_passes_test(lambda u: u.is_superuser)
 def admin_dashboard(request):
     return render(request, 'accounts/admin_dashboard.html')
 
