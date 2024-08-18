@@ -3,18 +3,59 @@
 {% block title %}Lista de Noticias{% endblock %}
 
 {% block content %}
-<h1>Noticias</h1>
-<a href="{% url 'news_create' %}">Crear Nueva Noticia</a>
-<ul>
-    {% for item in news %}
-        <li>
-            <h2>{{ item.title }}</h2>
-            <p>{{ item.content }}</p>
-            <a href="{% url 'news_update' item.pk %}">Editar</a> |
-            <a href="{% url 'news_delete' item.pk %}">Eliminar</a>
-        </li>
-    {% empty %}
-        <li>No hay noticias disponibles.</li>
-    {% endfor %}
-</ul>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Noticias</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+                    <li class="breadcrumb-item active">Noticias</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<div class="content">
+    <div class="container-fluid">
+        <!-- Botón para crear nueva noticia -->
+        <div class="mb-3">
+            <a href="{% url 'news_create' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Crear Nueva Noticia
+            </a>
+        </div>
+
+        <!-- Lista de noticias -->
+        <div class="row">
+            {% for item in news %}
+                <div class="col-md-6">
+                    <div class="card">
+                        {% if item.image %}
+                            <img src="{{ item.image.url }}" class="card-img-top img-fluid" alt="{{ item.title }}" style="height: 200px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.title }}</h5>
+                            <p class="card-text">{{ item.content|truncatewords:20 }}</p>
+                            <a href="{% url 'news_update' item.pk %}" class="btn btn-info">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <a href="{% url 'news_delete' item.pk %}" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-warning" role="alert">
+                        No hay noticias disponibles.
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div><!-- /.container-fluid -->
+</div>
 {% endblock %}

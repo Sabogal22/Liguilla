@@ -1,38 +1,49 @@
 {% load static %}
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
   <a href="{% url 'home' %}" class="brand-link">
     <img src="{% static 'AdminLTE/dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light">LIGUILLA</span>
   </a>
+
+  <!-- Sidebar -->
   <div class="sidebar">
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    <!-- Sidebar user panel -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex align-items-center justify-content-between">
       <div class="image">
         <img src="{% static 'AdminLTE/dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
       </div>
-      <div class="info">
-        {% if user.is_authenticated %}
-          <a href="#" class="d-block">{{ user.username }}</a>
-          <!-- Icono para cerrar sesión -->
-          <form action="{% url 'logout' %}" method="post" class="form-inline">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-link p-0" title="Cerrar Sesión">
+      <div class="info d-flex justify-content-between align-items-center w-100">
+        <div>
+          {% if user.is_authenticated %}
+            <a href="#" class="d-block">{{ user.username }}</a>
+          {% else %}
+            <a href="{% url 'login' %}" class="d-block">
+              <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+            </a>
+          {% endif %}
+        </div>
+        <div>
+          {% if user.is_authenticated %}
+            <!-- Botón de cierre de sesión -->
+            <form action="{% url 'logout' %}" method="post" class="d-inline">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-link p-0" title="Cerrar Sesión">
                 <i class="fas fa-sign-out-alt text-danger"></i>
-            </button>
-        </form>        
-        {% else %}
-          <!-- Icono para iniciar sesión -->
-          <a href="{% url 'login' %}" class="d-block">
-            <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
-          </a>
-        {% endif %}
+              </button>
+            </form>
+          {% endif %}
+        </div>
       </div>
-    </div>    
+    </div>
+
+    <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <!-- Dashboard -->
+        <!-- Dashboard (solo visible para usuarios autenticados) -->
         {% if user.is_authenticated %}
-        <li class="nav-item menu-open">
-          <a href="#" class="nav-link active">
+        <li class="nav-item {% if request.resolver_match.url_name in 'admin_dashboard news_list' %}menu-open{% endif %}">
+          <a href="#" class="nav-link {% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
@@ -41,47 +52,61 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{% url 'admin_dashboard' %}" class="nav-link active">
+              <a href="{% url 'admin_dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Admin Dashboard</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{% url 'news_list' %}" class="nav-link">
+              <a href="{% url 'news_list' %}" class="nav-link {% if request.resolver_match.url_name == 'news_list' %}active{% endif %}">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Noticias</p>
+                <p>Gestionar Noticias</p>
               </a>
             </li>
           </ul>
         </li>
         {% endif %}
-        <!-- Secciones del Campeonato -->
+
+        <!-- Secciones Generales del Campeonato -->
         <li class="nav-item">
-          <a href="% url 'partidos_list' %" class="nav-link">
+          <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+            <i class="nav-icon fas fa-home"></i>
+            <p>Inicio</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="% url 'partidos_list' %" class="nav-link {% if request.resolver_match.url_name == 'partidos_list' %}active{% endif %}">
             <i class="nav-icon fas fa-futbol"></i>
             <p>Partidos</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="% url 'tabla_posiciones' %" class="nav-link">
+          <a href="{% url 'news' %}" class="nav-link {% if request.resolver_match.url_name == 'news' %}active{% endif %}">
+            <i class="nav-icon fas fa-newspaper"></i>
+            <p>Noticias</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="% url 'tabla_posiciones' %" class="nav-link {% if request.resolver_match.url_name == 'tabla_posiciones' %}active{% endif %}">
             <i class="nav-icon fas fa-list-ol"></i>
             <p>Tabla de Posiciones</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="% url 'goleadores_list' %" class="nav-link">
+          <a href="% url 'goleadores_list' %" class="nav-link {% if request.resolver_match.url_name == 'goleadores_list' %}active{% endif %}">
             <i class="nav-icon fas fa-chart-bar"></i>
             <p>Goleadores</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="% url 'todo_campeonato' %" class="nav-link">
+          <a href="% url 'todo_campeonato' %" class="nav-link {% if request.resolver_match.url_name == 'todo_campeonato' %}active{% endif %}">
             <i class="nav-icon fas fa-info-circle"></i>
             <p>Todo sobre el Campeonato</p>
           </a>
         </li>
       </ul>
     </nav>
+    <!-- /.sidebar-menu -->
   </div>
+  <!-- /.sidebar -->
 </aside>
-  

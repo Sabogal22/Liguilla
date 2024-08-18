@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from .models import News
 from .forms import NewsForm
 
@@ -14,9 +15,11 @@ def admin_dashboard(request):
     return render(request, 'accounts/admin_dashboard.html')
 
 def news(request):
-    # Obtiene todas las noticias ordenadas por fecha de creación
-    news = News.objects.all().order_by('-created_at')
-    return render(request, 'accounts/news/index.html', {'news': news})
+    news_list = News.objects.all().order_by('-created_at')
+    paginator = Paginator(news_list, 10)  # Muestra 10 noticias por página
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'accounts/news/index.html', {'page_obj': page_obj})
 
 @login_required
 def news_list(request):
@@ -27,7 +30,7 @@ def news_list(request):
 @login_required
 def news_create(request):
     if request.method == 'POST':
-        form = NewsForm(request.POST)
+        form = NewsForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('news_list')

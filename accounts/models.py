@@ -4,6 +4,7 @@ from django.utils import timezone
 class News(models.Model):
   title = models.CharField(max_length=200)  # Título de la noticia
   content = models.TextField()  # Contenido de la noticia
+  image = models.ImageField(upload_to='news_images/', blank=True, null=True)  # Campo para la imagen
   created_at = models.DateTimeField(default=timezone.now)  # Fecha de creación
 
   def __str__(self):
