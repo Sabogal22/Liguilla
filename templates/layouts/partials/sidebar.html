@@ -40,7 +40,8 @@
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <!-- Dashboard (solo visible para usuarios autenticados) -->
+        
+        <!-- Dashboard (solo para usuarios autenticados) -->
         {% if user.is_authenticated %}
         <li class="nav-item {% if request.resolver_match.url_name in 'admin_dashboard news_list' %}menu-open{% endif %}">
           <a href="#" class="nav-link {% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}">
@@ -63,6 +64,18 @@
                 <p>Gestionar Noticias</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="{% url 'team_list' %}" class="nav-link {% if request.resolver_match.url_name == 'team_list' %}active{% endif %}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Gestionar Equipos</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'match_list' %}" class="nav-link {% if request.resolver_match.url_name == 'match_list' %}active{% endif %}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Gestionar Partidos</p>
+              </a>
+            </li>
           </ul>
         </li>
         {% endif %}
@@ -75,7 +88,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="% url 'partidos_list' %" class="nav-link {% if request.resolver_match.url_name == 'partidos_list' %}active{% endif %}">
+          <a href="{% url 'match_list' %}" class="nav-link {% if request.resolver_match.url_name == 'match_list' %}active{% endif %}">
             <i class="nav-icon fas fa-futbol"></i>
             <p>Partidos</p>
           </a>
@@ -87,21 +100,15 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="% url 'tabla_posiciones' %" class="nav-link {% if request.resolver_match.url_name == 'tabla_posiciones' %}active{% endif %}">
+          <a href="{% url 'standings' %}" class="nav-link {% if request.resolver_match.url_name == 'standings' %}active{% endif %}">
             <i class="nav-icon fas fa-list-ol"></i>
             <p>Tabla de Posiciones</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="% url 'goleadores_list' %" class="nav-link {% if request.resolver_match.url_name == 'goleadores_list' %}active{% endif %}">
+          <a href="{% url 'player_list' team_id=1 %}" class="nav-link {% if request.resolver_match.url_name == 'player_list' %}active{% endif %}">
             <i class="nav-icon fas fa-chart-bar"></i>
             <p>Goleadores</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="% url 'todo_campeonato' %" class="nav-link {% if request.resolver_match.url_name == 'todo_campeonato' %}active{% endif %}">
-            <i class="nav-icon fas fa-info-circle"></i>
-            <p>Todo sobre el Campeonato</p>
           </a>
         </li>
       </ul>

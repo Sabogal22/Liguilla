@@ -1,0 +1,67 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>Lista de Jugadores</h1>
+  </section>
+
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">Jugadores Registrados</h3>
+            {% if user.is_authenticated %}
+              <a href="{% url 'player_create' %}" class="btn btn-primary pull-right">Agregar Jugador</a>
+            {% endif %}
+          </div>
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Posición</th>
+                  <th>Número</th>
+                  <th>Equipo</th>
+                  <th>Goles</th>
+                  <th>Tarjetas Amarillas</th>
+                  <th>Tarjetas Rojas</th>
+                  {% if user.is_authenticated %}
+                    <th>Acciones</th>
+                  {% endif %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for player in players %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ player.name }}</td>
+                  <td>{{ player.get_position_display }}</td>
+                  <td>{{ player.number }}</td>
+                  <td>{{ player.team.name }}</td>
+                  <td>{{ player.goals }}</td>
+                  <td>{{ player.yellow_cards }}</td>
+                  <td>{{ player.red_cards }}</td>
+                  {% if user.is_authenticated %}
+                    <td>
+                      <a href="{% url 'player_update' player.pk %}" class="btn btn-xs btn-warning">Editar</a>
+                      <a href="{% url 'player_delete' player.pk %}" class="btn btn-xs btn-danger">Eliminar</a>
+                    </td>
+                  {% endif %}
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="{% if user.is_authenticated %}9{% else %}8{% endif %}" class="text-center">No hay jugadores registrados.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Tabla de Posiciones</h1>
+      </div>
+      <div class="col-sm-6">
+        <!-- Breadcrumb -->
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+          <li class="breadcrumb-item active">Tabla de Posiciones</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main content -->
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Tabla de Posiciones del Campeonato</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Posición</th>
+                  <th>Equipo</th>
+                  <th>Partidos Jugados</th>
+                  <th>Ganados</th>
+                  <th>Empatados</th>
+                  <th>Perdidos</th>
+                  <th>Goles a Favor</th>
+                  <th>Goles en Contra</th>
+                  <th>Diferencia de Goles</th>
+                  <th>Puntos</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for team in teams %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ team.name }}</td>
+                    <td>{{ team.matches_played }}</td>
+                    <td>{{ team.wins }}</td>
+                    <td>{{ team.draws }}</td>
+                    <td>{{ team.losses }}</td>
+                    <td>{{ team.goals_for }}</td>
+                    <td>{{ team.goals_against }}</td>
+                    <td>{{ team.goal_difference }}</td>
+                    <td>{{ team.points }}</td>
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="10" class="text-center">No hay equipos disponibles</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content -->
+{% endblock %}

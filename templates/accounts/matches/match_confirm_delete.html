@@ -1,0 +1,33 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>Confirmar Eliminación</h1>
+  </section>
+
+  <section class="content">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="box box-danger">
+          <div class="box-header with-border">
+            <h3 class="box-title">¿Estás seguro de que deseas eliminar este partido?</h3>
+          </div>
+          <div class="box-body">
+            <p><strong>Partido:</strong> {{ match.team_home.name }} vs {{ match.team_away.name }}</p>
+            <p><strong>Fecha:</strong> {{ match.date }}</p>
+            <p><strong>Ubicación:</strong> {{ match.location }}</p>
+          </div>
+          <div class="box-footer">
+            <form method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">Eliminar</button>
+              <a href="{% url 'match_list' %}" class="btn btn-default">Cancelar</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

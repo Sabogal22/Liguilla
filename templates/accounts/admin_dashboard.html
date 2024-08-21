@@ -6,56 +6,61 @@
 <h2>Bienvenido al Dashboard del Administrador</h2>
 <div class="container-fluid">
   <div class="row">
+    <!-- Card para el Número de Partidos Programados -->
     <div class="col-lg-3 col-6">
       <div class="small-box bg-info">
         <div class="inner">
-          <h3>150</h3>
-          <p>New Orders</p>
+          <h3>{{ num_matches }}</h3>
+          <p>Partidos Programados</p>
         </div>
         <div class="icon">
-          <i class="ion ion-bag"></i>
+          <i class="ion ion-calendar"></i>
         </div>
-        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        <a href="{% url 'match_list' %}" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
       </div>
     </div>
-  
+
+    <!-- Card para el Número de Equipos Registrados -->
     <div class="col-lg-3 col-6">
       <div class="small-box bg-success">
         <div class="inner">
-          <h3>53<sup style="font-size: 20px">%</sup></h3>
-          <p>Bounce Rate</p>
+          <h3>{{ num_teams }}</h3>
+          <p>Equipos Registrados</p>
         </div>
         <div class="icon">
-          <i class="ion ion-stats-bars"></i>
+          <i class="ion ion-football"></i>
         </div>
-        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        <a href="{% url 'team_list' %}" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
       </div>
     </div>
-  
+
+    <!-- Card para el Número de Jugadores Registrados -->
     <div class="col-lg-3 col-6">
-    <div class="small-box bg-warning">
-      <div class="inner">
-        <h3>44</h3>
-        <p>User Registrations</p>
+      <div class="small-box bg-warning">
+        <div class="inner">
+          <h3>{{ num_players }}</h3>
+          <p>Jugadores Registrados</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-person"></i>
+        </div>
+        <a href="{% url 'player_list' team_id=1 %}" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
       </div>
-      <div class="icon">
-        <i class="ion ion-person-add"></i>
+    </div>
+
+    <!-- Card para el Número de Noticias Publicadas -->
+    <div class="col-lg-3 col-6">
+      <div class="small-box bg-danger">
+        <div class="inner">
+          <h3>{{ num_news }}</h3>
+          <p>Noticias Publicadas</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-newspaper"></i>
+        </div>
+        <a href="{% url 'news_list' %}" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
       </div>
-      <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
-  
-  <div class="col-lg-3 col-6">
-    <div class="small-box bg-danger">
-      <div class="inner">
-        <h3>65</h3>
-        <p>Unique Visitors</p>
-      </div>
-      <div class="icon">
-        <i class="ion ion-pie-graph"></i>
-      </div>
-      <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-    </div>
-  </div>  
 </div>
 {% endblock %}
